@@ -4,26 +4,21 @@ section .data
 	nline db 0xa
 	nlen equ $ - nline
 
-	msg db 	'Enter array size ( 1 to 9) : ',0xa
+	msg db 	'Enter number ( 1 to 9) : ',0xa
 	lmsg equ $ - msg
 
-	msg1 db 'Enter element '
+	msg1 db 'Enter '
 	lmsg1 equ $ - msg1
 
-	msg2 db 0xa,'After Sorting : '
+	msg2 db 'numbers',0xa
 	lmsg2 equ $ - msg2
 
-	msg3 db 'Before Sorting : '
-	lmsg3 equ $ - msg3
-
-	colon db " : "
-	lcolon equ $ - colon
 
 section .bss
 	num resb 1
 	i   resb 1
 	j   resb 1
-	sz  resb 1
+	size  resb 1
 	array resb 20
 	dmy resb 1
 	tst resb 1
@@ -33,16 +28,28 @@ section .text
 	global _start
 
 _start:
-	mov eax,4		;print enter arrray size
+	mov eax,4		;print Enter number
 	mov ebx,1
 	mov ecx,msg
 	mov edx,lmsg
 	int 0x80
 
-	mov eax,3		;take array size input 
+	mov eax,3		;take number input 
 	mov ebx,0
-	mov ecx,sz  
+	mov ecx,size  
 	mov edx,1
+	int 0x80
+
+	mov eax,4		;print Enter 
+	mov ebx,1
+	mov ecx,msg1
+	mov edx,lmsg1
+	int 0x80
+
+	mov eax,4		;print numbers
+	mov ebx,1
+	mov ecx,msg2
+	mov edx,lmsg2
 	int 0x80
 
 	mov eax,3		; input dummy
@@ -51,7 +58,7 @@ _start:
 	mov edx,1
 	int 0x80
 
-	mov al,[sz] 
+	mov al,[size] 
 	sub al,'0'
 	mov [num],al
 
